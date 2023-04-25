@@ -38,8 +38,9 @@ public class TestCourierLogin {
     @Test
     public void testSuccessCourierLogin(){
         ValidatableResponse courierLogin = courierSteps.courierAuthorization(courierLoginCredintals);
-        courierAssertVoid.successLoginCourierAndTakeId(courierLogin);
         courierId = courierLogin.extract().path("id");
+        courierAssertVoid.successLoginCourierAndTakeId(courierLogin);
+
     }
 
     @DisplayName("Тест на ошибку логина курьера из-за отсутсвия логина и пароля")
