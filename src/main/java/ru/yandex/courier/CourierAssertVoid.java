@@ -5,6 +5,7 @@ import io.restassured.response.ValidatableResponse;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.apache.http.HttpStatus.*;
 
 
 public class CourierAssertVoid {
@@ -12,21 +13,21 @@ public class CourierAssertVoid {
     public void createCourier200Ok(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("ok", is(true));
     }
     @Step("Ошибка при создании двух одинаковых курьеров")
     public void createIdenteficLoginCouriers(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(409)
+                .statusCode(SC_CONFLICT)
                 .body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
     }
     @Step("Создание курьера с невалидными данными/недостаточной информацией")
     public void createCourierWithNotValidData(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(400)
+                .statusCode(SC_REQUEST_TIMEOUT)
                 .body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
@@ -34,14 +35,14 @@ public class CourierAssertVoid {
     public void deleteCourierWithExistId(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("ok", is(true));
     }
     @Step("Удаление курьера с не существующим id")
     public void deleteCourierWithNotExistId(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(404)
+                .statusCode(SC_NOT_FOUND)
                 .body("message", equalTo("Курьера с таким id нет."));
     }
 
@@ -49,7 +50,7 @@ public class CourierAssertVoid {
     public void successLoginCourierAndTakeId(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("id", greaterThan(0))
                 .extract()
                 .path("id");
@@ -59,7 +60,7 @@ public class CourierAssertVoid {
     public void errorLoginCourierWithNotValidCredintals(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(404)
+                .statusCode(SC_NOT_FOUND)
                 .body("message", equalTo("Учетная запись не найдена"));
     }
 
@@ -67,7 +68,7 @@ public class CourierAssertVoid {
     public void errorLoginCourierWithoutCreditnals(ValidatableResponse response){
         response
                 .assertThat()
-                .statusCode(400)
+                .statusCode(SC_BAD_REQUEST)
                 .body("message", equalTo("Недостаточно данных для входа"));
     }
 

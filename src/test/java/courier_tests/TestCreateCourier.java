@@ -1,4 +1,4 @@
-package courierTests;
+package courier_tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -27,7 +27,7 @@ public class TestCreateCourier {
     @After
     @Step("Удаление ранее созданного курьера")
     public void cleanData(){
-        courierSteps.CourierDelete(courierId);
+        courierSteps.courierDelete(courierId);
     }
 
     @DisplayName("Тест на создание нового курьера с валидными данными")
@@ -36,7 +36,7 @@ public class TestCreateCourier {
     public void successCreateCourier(){
         ValidatableResponse responseCourierCreate = courierSteps.createCourier(courierInfo);
         CourierLoginCredintals courierLoginCredintals = CourierLoginCredintals.from(courierInfo);
-        courierId = courierSteps.CourierAuthorization(courierLoginCredintals).extract().path("id");
+        courierId = courierSteps.courierAuthorization(courierLoginCredintals).extract().path("id");
         courierAssertVoid.createCourier200Ok(responseCourierCreate);
     }
 

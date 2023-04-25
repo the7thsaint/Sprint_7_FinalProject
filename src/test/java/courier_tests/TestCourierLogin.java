@@ -1,4 +1,4 @@
-package courierTests;
+package courier_tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -30,14 +30,14 @@ public class TestCourierLogin {
     @After
     @Step("Удаление ранее созданного курьера")
     public void cleanData(){
-        courierSteps.CourierDelete(courierId);
+        courierSteps.courierDelete(courierId);
     }
 
     @DisplayName("Тест на успешное создание курьера")
     @Description("Логин с валидными данными")
     @Test
     public void testSuccessCourierLogin(){
-        ValidatableResponse courierLogin = courierSteps.CourierAuthorization(courierLoginCredintals);
+        ValidatableResponse courierLogin = courierSteps.courierAuthorization(courierLoginCredintals);
         courierAssertVoid.successLoginCourierAndTakeId(courierLogin);
         courierId = courierLogin.extract().path("id");
     }
@@ -46,7 +46,7 @@ public class TestCourierLogin {
     @Description("Логин с пустыми данными")
     @Test
     public void testErrorCourierLoginWithEmptyCreds(){
-        ValidatableResponse courierLogin = courierSteps.CourierAuthorization(new CourierLoginCredintals("",""));
+        ValidatableResponse courierLogin = courierSteps.courierAuthorization(new CourierLoginCredintals("",""));
         courierAssertVoid.errorLoginCourierWithoutCreditnals(courierLogin);
     }
 
@@ -54,7 +54,7 @@ public class TestCourierLogin {
     @Description("Логин с не существующими данными")
     @Test
     public void testErrorCourierLoginWithDoesNotExistCredintals(){
-        ValidatableResponse courierLogin = courierSteps.CourierAuthorization(new CourierLoginCredintals("f","s"));
+        ValidatableResponse courierLogin = courierSteps.courierAuthorization(new CourierLoginCredintals("f","s"));
         courierAssertVoid.errorLoginCourierWithNotValidCredintals(courierLogin);
     }
 
@@ -62,7 +62,7 @@ public class TestCourierLogin {
     @Description("Логинг с пустым логином")
     @Test
     public void testErrorLoginCourierWithEmptyLogin(){
-        ValidatableResponse courierLogin = courierSteps.CourierAuthorization(new CourierLoginCredintals("", courierInfo.getPassword()));
+        ValidatableResponse courierLogin = courierSteps.courierAuthorization(new CourierLoginCredintals("", courierInfo.getPassword()));
         courierAssertVoid.errorLoginCourierWithoutCreditnals(courierLogin);
     }
 
@@ -70,7 +70,7 @@ public class TestCourierLogin {
     @Description("Логин с пустым паролем")
     @Test
     public void testErrorLoginCourierWithEmptyPassword(){
-        ValidatableResponse courierLogin = courierSteps.CourierAuthorization(new CourierLoginCredintals(courierInfo.getLogin(), ""));
+        ValidatableResponse courierLogin = courierSteps.courierAuthorization(new CourierLoginCredintals(courierInfo.getLogin(), ""));
         courierAssertVoid.errorLoginCourierWithoutCreditnals(courierLogin);
     }
 

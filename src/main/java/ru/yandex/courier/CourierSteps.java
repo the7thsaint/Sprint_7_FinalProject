@@ -26,7 +26,7 @@ public class CourierSteps {
                 .then();
     }
     @Step("Логин курьера")
-    public ValidatableResponse CourierAuthorization(CourierLoginCredintals courierInfo){
+    public ValidatableResponse courierAuthorization(CourierLoginCredintals courierInfo){
         return requestSpec()
                 .body(courierInfo)
                 .when()
@@ -34,7 +34,7 @@ public class CourierSteps {
                 .then();
     }
     @Step("удаление курьера")
-    public ValidatableResponse CourierDelete(int courierId){
+    public ValidatableResponse courierDelete(int courierId){
         return requestSpec()
                 .when()
                 .delete(DELETE_COURIER + courierId)
